@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <?php
 require "connexion.php";
 session_start();
@@ -51,6 +44,21 @@ $count = 0;
                     }
                 }
             });
+
+            $('#addForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the form from submitting the traditional way
+                $.ajax({
+                    type: 'POST',
+                    url: 'process_absence.php', // The PHP file that will process the form data
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        alert('Data submitted successfully!');
+                    },
+                    error: function () {
+                        alert('An error occurred while submitting the data.');
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -88,7 +96,7 @@ $count = 0;
             <span style="font-size: 50px; font-weight: 600;">الغياب</span>
         </div>
         <br>
-        <form method="post" action="">
+        <form id="addForm" method="post" action="">
             <table id="myTable_test" class="display" style="color: var(--text-color);">
                 <thead>
                 <tr>
@@ -131,7 +139,7 @@ $count = 0;
                             <td><?php echo $v["Numéro_de_bus"]; ?></td>
                             <td>
                                 <input class="form-check-input" type="checkbox" name="check[]" value="<?php echo $v["ID_étudient"]; ?>">
-                                <label class="form-check-label" for="check">غائب</label>
+                                <label class="form-check-label" for="check_<?php echo $v["ID_étudient"]; ?>">غائب</label>
                                 <input name='std[]' value="<?php echo $v["ID_étudient"]; ?>" type='hidden' class='form-control'>
                             </td>
                             <td>
@@ -152,15 +160,17 @@ $count = 0;
             </table>
         </form>
         <?php
+        // The following block should be moved to 'process_absence.php'
+        /*
         if (isset($_POST['add'])) {
             $std = isset($_POST['std']) ? $_POST['std'] : [];
-            $check = $_POST['check'] ;
+            $check = isset($_POST['check']) ? $_POST['check'] : [];
             $Period = $_POST["Period"];
             $id_bus = $_POST["id_bus"];
 
             foreach ($std as $student_id) {
                 if ($Period == 'Entrée_matin') {
-                  if(isset($check[$student_id])) {
+                  if(in_array($student_id, $check)) {
                     $req = "INSERT INTO absence (Entrée_matin, IDétudient, IDbus) VALUES ('غائب', :student_id, :id_bus)";
                     $stmt = $con->prepare($req);
                     $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
@@ -176,7 +186,7 @@ $count = 0;
                     
                   }
                 } else {
-                  if(isset($check[$student_id])) {
+                  if(in_array($student_id, $check)) {
                     $sql_update = "UPDATE absence SET $Period='غائب' WHERE IDétudient=:student_id AND IDbus=:id_bus AND Date_Absence=CURDATE()";
                     $stmt_update = $con->prepare($sql_update);
                     $stmt_update->bindParam(':student_id', $student_id, PDO::PARAM_INT);
@@ -186,6 +196,7 @@ $count = 0;
                 }
             }
         }
+        */
         ?>
     </div>
 </section>
@@ -193,5 +204,3 @@ $count = 0;
 <script src="../views/js/javascript.js"></script>
 </body>
 </html>
-
-
