@@ -159,45 +159,6 @@ $count = 0;
                 </tbody>
             </table>
         </form>
-        <?php
-        // The following block should be moved to 'process_absence.php'
-        /*
-        if (isset($_POST['add'])) {
-            $std = isset($_POST['std']) ? $_POST['std'] : [];
-            $check = isset($_POST['check']) ? $_POST['check'] : [];
-            $Period = $_POST["Period"];
-            $id_bus = $_POST["id_bus"];
-
-            foreach ($std as $student_id) {
-                if ($Period == 'Entrée_matin') {
-                  if(in_array($student_id, $check)) {
-                    $req = "INSERT INTO absence (Entrée_matin, IDétudient, IDbus) VALUES ('غائب', :student_id, :id_bus)";
-                    $stmt = $con->prepare($req);
-                    $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-                    $stmt->bindParam(':id_bus', $id_bus, PDO::PARAM_INT);
-                    $stmt->execute();
-                  }else {
-                    $req="INSERT INTO absence ( IDétudient, IDbus) VALUES (:student_id, :id_bus);";
-                    $stmt = $con->prepare($req);
-                    $stmt = $con->prepare($req);
-                    $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-                    $stmt->bindParam(':id_bus', $id_bus, PDO::PARAM_INT);
-                    $stmt->execute();
-                    
-                  }
-                } else {
-                  if(in_array($student_id, $check)) {
-                    $sql_update = "UPDATE absence SET $Period='غائب' WHERE IDétudient=:student_id AND IDbus=:id_bus AND Date_Absence=CURDATE()";
-                    $stmt_update = $con->prepare($sql_update);
-                    $stmt_update->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-                    $stmt_update->bindParam(':id_bus', $id_bus, PDO::PARAM_INT);
-                    $stmt_update->execute();
-                  }
-                }
-            }
-        }
-        */
-        ?>
     </div>
 </section>
 <script src="../views/js/bootstrap.bundle.min.js"></script>

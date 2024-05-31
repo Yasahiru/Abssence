@@ -8,12 +8,12 @@ class crud{
         try {
             $con=new PDO("mysql:host=$host;dbname=$base",$user,$pwd);
             return $con;
-            echo "<script>alert('conected')</script>";
         } catch (PDOException $e) {
             echo "Probleme de Connexion".$e->getMessage();
             return null;
         }
     }
+    
     function responsable_des_transports($l,$p){
         $con=$this->getConnection();
         $req="select * from responsable_des_transports where User_R='$l' and PWD_R='$p'";
