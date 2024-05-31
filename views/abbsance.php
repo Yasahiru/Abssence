@@ -102,7 +102,7 @@ $count=0;
                         <option value="Sortie_matin">الخروج الصباحي</option>
                         <option value="Entrée_soir">الدخول المسائي</option>
                         <option value="Sortie_soir">الخروج المسائي</option>
-                    </select>
+                    </select>  
                 </div>
                 <div class="col-md-6">
                     <label for="" class="form-label">اختر رقم الحافلة</label>
